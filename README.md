@@ -1,6 +1,8 @@
 eloquent-custom-attributes [![Code Climate](https://codeclimate.com/github/fhteam/eloquent-custom-attributes/badges/gpa.svg)](https://codeclimate.com/github/fhteam/eloquent-custom-attributes) [![Laravel compatibility](https://img.shields.io/badge/laravel-4-green.svg)](http://laravel.com/) [![Laravel compatibility](https://img.shields.io/badge/laravel-5-green.svg)](http://laravel.com/)
 ============
 
+This small library allows you to define custom (virtual) attributes on Eloquent models and use them to interact (or not,
+if you so choose) with real ones.
 
 Installation
 ------------
@@ -20,8 +22,10 @@ Usage
 ```php
 
 /**
- * @property array $json_meta_data This attribute is actually of 'string' type in database and in model. 
- *                                 But we can work with it just like it is array delegating all underlying 
+ * @property array $json_meta_data This attribute is actually of 'string' 
+ *                                 type in database and in model. 
+ *                                 But we can work with it just like 
+ *                                 it is array delegating all underlying 
  *                                 operations to JsonAttrHandlerTrait
  */
 class Invoice extends Eloquent
@@ -67,6 +71,17 @@ class Main
     }
 }
 ```
+
+Interesting
+------------
+
+ - The name of the custom attribute can be the same as the name of the real attribute of the Laravel model. In this 
+ case custom attribute will hide real one and then the interaction with it will be available via responsible trait only
+ (well, you can still access raw attribute values in the `$model->attributes[]` though).
+ But of course you can use another name for a custom attribute to interact with a real one if you need them both to be 
+ visible
+ - You can have one custom attribute (`date` attribute for example) to interact to several underlying real attributes 
+  of the model (`day`, `month` and `year`, separately if you wish)
 
 Extending
 ------------
