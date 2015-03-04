@@ -1,10 +1,9 @@
 <?php
 
-namespace FHTeam\EloquentCustomAttrs\Geo;
+namespace FHTeam\EloquentCustomAttrs\PostgresGeo;
 
 use Eloquent;
 use Exception;
-use FHFW\Database\Helper\TypeConversionHelper;
 
 /**
  * Class GeoAttrHandlerTrait
@@ -30,7 +29,7 @@ trait PostgresGeoPointAttrHandlerTrait
             return $this->postgresGeoPointAttrWrappers[$key];
         }
 
-        $wrapper = new GeoPointWrapper(
+        $wrapper = new PostgresGeoPointWrapper(
             $this,
             $key,
             $this->postgresPointToArray(parent::getAttribute($key))

@@ -1,15 +1,15 @@
 <?php
 
-namespace FHTeam\EloquentCustomAttrs\Geo;
+namespace FHTeam\EloquentCustomAttrs\PostgresGeo;
 
 use FHTeam\EloquentCustomAttrs\ArrayAttributeWrapper;
 
 /**
- * Wrapper for geographical coordinates
+ * Wrapper for geographical coordinates as a Postgres Point type
  *
  * @package FHTeam\EloquentCustomAttrs\Geo
  */
-class GeoPointWrapper extends ArrayAttributeWrapper
+class PostgresGeoPointWrapper extends ArrayAttributeWrapper
 {
 
     /**
@@ -25,11 +25,11 @@ class GeoPointWrapper extends ArrayAttributeWrapper
     /**
      * Sets the point as it is
      *
-     * @param null|array $point
+     * @param null|array $value
      */
-    public function setPoint($point)
+    public function setPoint($value)
     {
-        $this->value = $point;
+        $this->value = $value;
         $this->refreshConnectedModel();
     }
 
@@ -50,15 +50,15 @@ class GeoPointWrapper extends ArrayAttributeWrapper
     /**
      * Sets point to passed latitude and longitude
      *
-     * @param null|array $latLng
+     * @param null|array $value
      */
-    public function setLatLng($latLng)
+    public function setLatLng($value)
     {
-        if (!$latLng) {
-            $this->value = $latLng;
+        if (!$value) {
+            $this->value = $value;
         }
 
-        $this->value = array_reverse($latLng);
+        $this->value = array_reverse($value);
         $this->refreshConnectedModel();
     }
 }
