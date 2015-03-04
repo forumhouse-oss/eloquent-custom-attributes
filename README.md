@@ -37,6 +37,11 @@ class Invoice extends Eloquent
         'json_meta_data' => JsonAttrHandlerTrait::class,
     ];
 
+    /**
+     * We have to override Eloquent's getAttribute() /  
+     * setAttribute() on the model directly (not in CustomAttributeHelperTrait) 
+     * because you might wish to do something in those methods yourself
+     */
     public function getAttribute($key)
     {
         if ($this->isCustomAttribute($key)) {
