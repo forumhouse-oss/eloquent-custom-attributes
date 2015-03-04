@@ -76,10 +76,10 @@ value conversion
 
  - Naming convention for such traits is `<typeName>AttrHandlerTrait`
  - Attribute handling traits must implement two methods: `handleGetAttribute<typeName>` and `handleSetAttribute<typeName>`.
- Check \FHTeam\EloquentCustomAttrs\Json\JsonAttrHandlerTrait for example
+ Check `Json\JsonAttrHandlerTrait` for example
  - Be careful with method naming in traits. Don't make them too common since they must nicely co-exist with methods
  of other traits Eloquent model may use
  - If your custom attribute represents complex type (not just a string or a number) consider making a wrapper around it. An 
- example of such wrapper can be \FHTeam\EloquentCustomAttrs\ArrayAttributeWrapper. It encapsulates an array value,
- provides access to it and updates corresponding model whenever attribute changes. Wrapper is cached so attribute can be 
- accessed several times from any part of the script
+ example of such wrapper can be `ArrayAttributeWrapper`. It encapsulates an array value, provides access to it and 
+ updates corresponding model whenever attribute changes. Wrapper is cached so attribute can be accessed several times 
+ from any part of the script
