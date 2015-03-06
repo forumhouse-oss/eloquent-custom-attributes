@@ -75,8 +75,12 @@ trait PostgresGeoPointAttrHandlerTrait
      * @return string
      * @throws Exception
      */
-    public function arrayToPostgresPoint(array $data)
+    public function arrayToPostgresPoint($data)
     {
+        if (null == $data) {
+            return null;
+        }
+
         if (count($data) !== 2) {
             throw new Exception("Point should have only two coordinates");
         }
