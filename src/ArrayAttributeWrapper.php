@@ -6,6 +6,7 @@ use Arr;
 use ArrayAccess;
 use ArrayIterator;
 use Eloquent;
+use Illuminate\Contracts\Support\Arrayable;
 use IteratorAggregate;
 use JsonSerializable;
 use Traversable;
@@ -15,7 +16,7 @@ use Traversable;
  *
  * @package FHTeam\EloquentCustomAttrs
  */
-class ArrayAttributeWrapper implements ArrayAccess, JsonSerializable, IteratorAggregate
+class ArrayAttributeWrapper implements ArrayAccess, JsonSerializable, IteratorAggregate, Arrayable
 {
     /**
      * @var Eloquent The associated model
@@ -132,6 +133,16 @@ class ArrayAttributeWrapper implements ArrayAccess, JsonSerializable, IteratorAg
      *       which is a value of any type other than a resource.
      */
     public function jsonSerialize()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
     {
         return $this->value;
     }
