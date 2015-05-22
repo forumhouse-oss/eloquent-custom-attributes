@@ -3,7 +3,7 @@
 namespace FHTeam\EloquentCustomAttrs;
 
 use Exception;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * Custom attribute helper for Eloquent models
