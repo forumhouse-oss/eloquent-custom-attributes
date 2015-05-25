@@ -5,6 +5,7 @@ namespace FHTeam\EloquentCustomAttrs;
 use Arr;
 use ArrayAccess;
 use ArrayIterator;
+use Countable;
 use Eloquent;
 use Illuminate\Contracts\Support\Arrayable;
 use IteratorAggregate;
@@ -16,7 +17,7 @@ use Traversable;
  *
  * @package FHTeam\EloquentCustomAttrs
  */
-class ArrayAttributeWrapper implements ArrayAccess, JsonSerializable, IteratorAggregate, Arrayable
+class ArrayAttributeWrapper implements ArrayAccess, JsonSerializable, IteratorAggregate, Arrayable, Countable
 {
     /**
      * @var Eloquent The associated model
@@ -166,5 +167,20 @@ class ArrayAttributeWrapper implements ArrayAccess, JsonSerializable, IteratorAg
     protected function refreshConnectedModel()
     {
         $this->object->{$this->attribute} = $this->value;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.1.0)<br/>
+     * Count elements of an object
+     *
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     *       </p>
+     *       <p>
+     *       The return value is cast to an integer.
+     */
+    public function count()
+    {
+        return count($this->value);
     }
 }
