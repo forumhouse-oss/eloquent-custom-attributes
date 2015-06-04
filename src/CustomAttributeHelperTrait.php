@@ -25,7 +25,7 @@ trait CustomAttributeHelperTrait
      */
     public function isCustomAttribute($key)
     {
-        return isset($this->customAttributes[$key]);
+        return array_key_exists($key, $this->customAttributes);
     }
 
     /**
@@ -38,6 +38,7 @@ trait CustomAttributeHelperTrait
     public function getCustomAttribute($key)
     {
         $methodName = $this->getCustomAttrAccessorMethod($key);
+
         return $this->$methodName($key);
     }
 
@@ -98,7 +99,7 @@ trait CustomAttributeHelperTrait
             );
         }
         $methodName = substr($methodName, 0, -strlen('AttrHandlerTrait'));
-        $methodName = "handle{$type}Attribute" . $methodName;
+        $methodName = "handle{$type}Attribute".$methodName;
 
         if (!method_exists($this, $methodName)) {
             throw new Exception("Accessor or mutator for field '$key' does not exists. Expected '$methodName'");
