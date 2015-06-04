@@ -8,7 +8,7 @@ use FHTeam\EloquentCustomAttrs\ArrayAttributeWrapper;
  *
  * @package PostgresTypes
  */
-class PostgresArrayAttrHandlerTrait
+trait PostgresArrayAttrHandlerTrait
 {
     /**
      * @var array
