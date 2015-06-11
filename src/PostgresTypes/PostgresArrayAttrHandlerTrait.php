@@ -8,7 +8,7 @@ use FHTeam\EloquentCustomAttrs\ArrayAttributeWrapper;
  *
  * @package PostgresTypes
  */
-trait PostgresArrayAttrHandlerTrait
+trait PostgresArrayAt\FHTeam\EloquentCustomAttrs\PostgresTypes\PostgresArrayAttrHandlerTraittrHandlerTrait
 {
     /**
      * @var array
@@ -59,7 +59,7 @@ trait PostgresArrayAttrHandlerTrait
     {
         $data = trim($data, "{} \t\n\r\0\x0B");
         if ('' === $data) {
-            return null;
+            return [];
         }
 
         return explode(',', $data);
@@ -73,16 +73,8 @@ trait PostgresArrayAttrHandlerTrait
      * @return string
      * @throws Exception
      */
-    public function phpArrayToPostgresArray($data)
+    public function phpArrayToPostgresArray(array $data)
     {
-        if (null == $data) {
-            return null;
-        }
-
-        if (count($data) !== 2) {
-            throw new Exception("Point should have only two coordinates");
-        }
-
         return '{'.implode(',', $data).'}';
     }
 }
