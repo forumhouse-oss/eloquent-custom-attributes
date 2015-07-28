@@ -1,12 +1,9 @@
-<?php
-
-namespace FHTeam\EloquentCustomAttrs;
+<?php namespace FHTeam\EloquentCustomAttrs;
 
 use Arr;
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
-use Eloquent;
 use Illuminate\Contracts\Support\Arrayable;
 use IteratorAggregate;
 use JsonSerializable;
@@ -17,34 +14,8 @@ use Traversable;
  *
  * @package FHTeam\EloquentCustomAttrs
  */
-class ArrayAttributeWrapper implements ArrayAccess, JsonSerializable, IteratorAggregate, Arrayable, Countable
+class ArrayAttributeWrapper extends AbstractAttributeWrapper implements ArrayAccess, JsonSerializable, IteratorAggregate, Arrayable, Countable
 {
-    /**
-     * @var Eloquent The associated model
-     */
-    protected $object;
-
-    /**
-     * @var string The name of the attribute of the associated model
-     */
-    protected $attribute;
-    /**
-     * @var array The value, associated with the attribute
-     */
-    protected $value;
-
-    /**
-     * @param Eloquent $object    The associated model
-     * @param string   $attribute The name of the attribute of the associated model
-     * @param array    $value     The value, associated with the attribute
-     */
-    public function __construct(Eloquent $object, $attribute, $value)
-    {
-        $this->object = $object;
-        $this->attribute = $attribute;
-        $this->value = $value;
-    }
-
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>
      * Whether a offset exists
@@ -161,13 +132,6 @@ class ArrayAttributeWrapper implements ArrayAccess, JsonSerializable, IteratorAg
         return new ArrayIterator($this->value);
     }
 
-    /**
-     * Updates associated model using the new value of the attribute
-     */
-    protected function refreshConnectedModel()
-    {
-        $this->object->{$this->attribute} = $this->value;
-    }
 
     /**
      * (PHP 5 &gt;= 5.1.0)<br/>
