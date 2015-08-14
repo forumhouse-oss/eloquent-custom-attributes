@@ -2,6 +2,7 @@
 
 use Exception;
 use FHTeam\EloquentCustomAttrs\ArrayAttributeWrapper;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Class PostgresArrayAttrHandlerTrait
@@ -68,13 +69,21 @@ trait PostgresArrayAttrHandlerTrait
     /**
      * Packs geometric POINT type data representation for ex. '(1.2,3.4)'
      *
-     * @param array $data Array of coordinates for the point - [X, Y]
+     * @param array|Arrayable $data Array of coordinates for the point - [X, Y]
      *
      * @return string
      * @throws Exception
      */
-    public function phpArrayToPostgresArray(array $data)
+    public function phpArrayToPostgresArray($data)
     {
+        if ($data instanceof Arrayable) {
+            $data = $data->toArray();
+        }
+
+        if (!is_array($data)) {
+            throw new Exception("Passed value cannot be converted to array: ".serialize($data));
+        }
+
         return '{'.implode(',', $data).'}';
     }
 }
