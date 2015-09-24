@@ -149,6 +149,14 @@ class ArrayAttributeWrapper implements ArrayAccess, JsonSerializable, IteratorAg
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return json_encode($this->toArray(), JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
      * (PHP 5 &gt;= 5.0.0)<br/>
      * Retrieve an external iterator
      *
