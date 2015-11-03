@@ -47,9 +47,9 @@ trait JsonAttrHandlerTrait
             $value = json_encode($value, JSON_UNESCAPED_UNICODE);
         }
 
-        $this->setWrapperForKey($key);
-
         parent::setAttribute($key, $value);
+
+        $this->setWrapperForKey($key);
     }
 
     /**
