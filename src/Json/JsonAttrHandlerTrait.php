@@ -1,6 +1,4 @@
-<?php
-
-namespace FHTeam\EloquentCustomAttrs\Json;
+<?php namespace FHTeam\EloquentCustomAttrs\Json;
 
 use Eloquent;
 use FHTeam\EloquentCustomAttrs\ArrayAttributeWrapper;
@@ -28,13 +26,8 @@ trait JsonAttrHandlerTrait
             return $this->jsonAttrWrappers[$key];
         }
 
-        $wrapper = new ArrayAttributeWrapper(
-            $this,
-            $key,
-            $this->exceptionalJsonDecode(parent::getAttribute($key), true)
-        );
+        $wrapper = $this->setWrapperForKey($key);
 
-        $this->jsonAttrWrappers[$key] = $wrapper;
         return $wrapper;
     }
 
@@ -53,6 +46,8 @@ trait JsonAttrHandlerTrait
         if (!is_string($value)) {
             $value = json_encode($value, JSON_UNESCAPED_UNICODE);
         }
+
+        $this->setWrapperForKey($key);
 
         parent::setAttribute($key, $value);
     }
@@ -79,7 +74,7 @@ trait JsonAttrHandlerTrait
             JSON_ERROR_STATE_MISMATCH => 'JSON_ERROR_STATE_MISMATCH - Underflow or the modes mismatch',
             JSON_ERROR_CTRL_CHAR => 'JSON_ERROR_CTRL_CHAR - Unexpected control character found',
             JSON_ERROR_SYNTAX => 'JSON_ERROR_SYNTAX - Syntax error, malformed JSON',
-            JSON_ERROR_UTF8 => 'JSON_ERROR_UTF8 - Malformed UTF-8 characters, possibly incorrectly encoded'
+            JSON_ERROR_UTF8 => 'JSON_ERROR_UTF8 - Malformed UTF-8 characters, possibly incorrectly encoded',
         ];
 
         $data = \json_decode($json, $assoc, $depth, $options);
@@ -88,12 +83,30 @@ trait JsonAttrHandlerTrait
             $last = json_last_error();
             throw new InvalidArgumentException(
                 'Unable to parse JSON data: '
-                . (isset($jsonErrors[$last])
+                .(isset($jsonErrors[$last])
                     ? $jsonErrors[$last]
                     : 'Unknown error')
             );
         }
 
         return $data;
+    }
+
+    /**
+     * @param $key
+     *
+     * @return ArrayAttributeWrapper
+     */
+    private function setWrapperForKey($key)
+    {
+        $wrapper = new ArrayAttributeWrapper(
+            $this,
+            $key,
+            $this->exceptionalJsonDecode(parent::getAttribute($key), true)
+        );
+
+        $this->jsonAttrWrappers[$key] = $wrapper;
+
+        return $wrapper;
     }
 }
